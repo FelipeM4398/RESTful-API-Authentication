@@ -4,19 +4,10 @@ import User from '../../models/User';
 import { errorCodes, messages } from '../constants';
 
 // expresiones regulares para validar algunos atributos
-const emailRegex: RegExp = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$/;
-const phoneRegex: RegExp = /^[0-9]{10}$/;
-const namesRegex: RegExp = /^[A-Za-z\s\u00f1\u00d1]{2,30}$/;
-const identificationRegex: RegExp = /^[0-9]{6,10}$/;
-
-/**
- * Valida los atributos enviados en la petición para iniciar sesión
- * @param req
-export function validateBodyForLogin(req: Request) {
-  validateEmail(req);
-  validatePassword(req);
-}
-*/
+const emailRegex = RegExp(/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$/);
+const phoneRegex = RegExp(/^[0-9]{10}$/);
+const namesRegex = RegExp(/^[A-Za-z\s\u00f1\u00d1]{2,30}$/);
+const identificationRegex = RegExp(/^[0-9]{6,10}$/);
 
 /**
  * Valida los atributos enviados en la petición para crear un usuario

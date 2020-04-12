@@ -13,10 +13,10 @@ export default function errorHandler(
   res: Response,
   _next: NextFunction
 ) {
-  res.status(err.status || 500).json({
+  res.status(err.status).json({
     path: req.path,
-    status: err.status || 500,
-    code: err.code || err.type || 'UnknownError',
-    message: err.message || 'Unknown Error',
+    status: err.status,
+    code: err.code,
+    message: err.message,
   });
 }
