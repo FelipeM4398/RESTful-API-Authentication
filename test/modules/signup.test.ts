@@ -1,11 +1,11 @@
 process.env.NODE_ENV = 'test';
 
 import chai from 'chai';
-import app from '../../../src/app';
+import app from './../../src/app';
 import chaiHttp = require('chai-http');
-import { endpoints, messages } from '../../../src/utils/constants';
-import mocks from '../../mocks/users';
-import knex from '../../../src/config/db/knex';
+import { endpoints, messages } from './../../src/utils/constants';
+import mocks from './../mocks/users';
+import knex from './../../src/config/db/knex';
 
 chai.use(chaiHttp);
 
