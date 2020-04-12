@@ -6,13 +6,12 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex('users').insert([
         {
-          id: 1,
-          identification: '1144205319',
-          name: 'Felipe',
-          last_name: 'Muñoz',
-          phone: '3177287425',
-          picture: 'https://i1.wp.com/cdn.auth0.com/avatars/fm.png',
-          email: 'felipem4398@gmail.com',
+          identification: '1234567890',
+          name: 'Admin',
+          last_name: 'Admin',
+          phone: '1234567890',
+          picture: 'https://i1.wp.com/cdn.auth0.com/avatars/aa.png',
+          email: 'admin@test.com',
           password: 'admin123',
           enable: true,
         },
