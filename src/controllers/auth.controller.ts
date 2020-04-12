@@ -1,6 +1,5 @@
 import { Request, NextFunction, Response } from 'express';
 import User from '../models/User';
-import picture from '../utils/picture';
 import { validateBodyForCreate } from '../utils/validations/user.validation';
 
 /**

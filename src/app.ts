@@ -3,10 +3,10 @@ import morgan from 'morgan';
 import cors from 'cors';
 import knex from './config/db/knex';
 import { Model } from 'objection';
-import MyError from './utils/customError';
-import errorHandler from './middlewares/error.handler';
+import MyError from './utils/MyError';
+import errorHandler from './middlewares/errorHandler';
 import { endpoints } from './utils/constants';
-import authRouter from './routes/auth.route';
+import authRouter from './routes/authRouter';
 
 /**
  * Initializations

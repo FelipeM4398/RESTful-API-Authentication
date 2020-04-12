@@ -1,5 +1,4 @@
 import { NextFunction, Response, Request } from 'express';
-import { messages, errorCodes } from '../utils/constants';
 
 /**
  * Captura los errores y envia una respuesta notificando del error
