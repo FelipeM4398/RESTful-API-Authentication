@@ -1,3 +1,5 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=FelipeM4398_RESTful-API-Authentication&metric=alert_status)](https://sonarcloud.io/dashboard?id=FelipeM4398_RESTful-API-Authentication)
+
 # RESTful API Authentication
 
 _API RESTful construida con NodeJS meidante el marco Express para la aurenticación y gestión de usuarios utilizando estandares como JSON Web Tokens (JWT) y Role Based Access Control (RBAC)_
