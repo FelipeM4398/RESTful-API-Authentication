@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
+import helmet from 'helmet';
 import cors from 'cors';
 import knex from './config/db/knex';
 import { Model } from 'objection';
@@ -25,6 +26,7 @@ app.set('port', process.env.PORT || 3000);
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
+app.use(helmet());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
