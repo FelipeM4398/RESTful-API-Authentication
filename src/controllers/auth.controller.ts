@@ -14,7 +14,8 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
     await validateBodyForCreate(req);
 
     // crea el usuario en la base de datos
-    await User.query().insert(req.body);
+    const user = await User.query().insert(req.body);
+    await user.$relatedQuery('roles').relate(2);
 
     // envia respuesta exitosa
     res.status(201).send({ message: 'user created' });

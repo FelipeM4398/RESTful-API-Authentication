@@ -1,6 +1,7 @@
 import { Model } from 'objection';
 import bcrypt from 'bcrypt';
 import picture from '../utils/picture';
+import Role from './Role';
 
 export default class User extends Model {
   static tableName = 'users';
@@ -18,5 +19,23 @@ export default class User extends Model {
     const hash = await bcrypt.hash(this.password, salt);
     this.password = hash;
     this.picture = picture(this.name, this.last_name);
+  }
+
+  static get relationMappings() {
+    return {
+      roles: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Role,
+        join: {
+          from: 'users.id',
+          through: {
+            // users_roles is the join table.
+            from: 'users_roles.id_user',
+            to: 'users_roles.id_role',
+          },
+          to: 'roles.id',
+        },
+      },
+    };
   }
 }
