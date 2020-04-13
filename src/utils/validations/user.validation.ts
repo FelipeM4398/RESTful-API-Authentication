@@ -4,10 +4,10 @@ import User from '../../models/User';
 import { errorCodes, messages } from '../constants';
 
 // expresiones regulares para validar algunos atributos
-const emailRegex = RegExp(/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$/);
 const phoneRegex = RegExp(/^[0-9]{10}$/);
 const namesRegex = RegExp(/^[A-Za-z\s\u00f1\u00d1]{2,30}$/);
 const identificationRegex = RegExp(/^[0-9]{6,10}$/);
+const emailRegex = RegExp(/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$/);
 
 /**
  * Valida los atributos enviados en la petición para crear un usuario
@@ -20,24 +20,8 @@ export async function validateBodyForCreate(req: Request) {
   validatePhone(req);
   validateEmail(req);
   validatePassword(req);
-
-  // valida que no exista un usuario registrado con la identificación enviada
-  if (await identificationExists(req)) {
-    throw new MyError(
-      errorCodes.alreadyExists,
-      messages.identificationAlreadyExists,
-      400
-    );
-  }
-
-  // valida que no exista un usuario registrado con el email enviado
-  if (await emailExists(req)) {
-    throw new MyError(
-      errorCodes.alreadyExists,
-      messages.emailAlreadyExists,
-      400
-    );
-  }
+  await identificationExists(req);
+  await emailExists(req);
 }
 
 /**
@@ -175,25 +159,35 @@ export function validatePhone(req: Request) {
 }
 
 /**
- * Busca un usuario por identificacion y retorna un booleano
+ * Valida que la identificación no se encuentre registrada
  * @param req
- * @return Promise<boolean>
  */
-export async function identificationExists(req: Request): Promise<boolean> {
+export async function identificationExists(req: Request) {
   const identification = req.body.identification;
   let users: any[] = [];
   users = await User.query().where('identification', identification);
-  return users.length > 0;
+  if (users.length > 0) {
+    throw new MyError(
+      errorCodes.alreadyExists,
+      messages.identificationAlreadyExists,
+      409
+    );
+  }
 }
 
 /**
- * Busca un usuario por email y retorna un booleano
+ * Valida que el email no se encuentre registrado
  * @param req
- * @return Promise<boolean>
  */
-export async function emailExists(req: Request): Promise<boolean> {
+export async function emailExists(req: Request) {
   const email = req.body.email;
   let users: any[] = [];
   users = await User.query().where('email', email);
-  return users.length > 0;
+  if (users.length > 0) {
+    throw new MyError(
+      errorCodes.alreadyExists,
+      messages.emailAlreadyExists,
+      409
+    );
+  }
 }
