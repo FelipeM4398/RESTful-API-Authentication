@@ -76,7 +76,7 @@ export function validateName(req: Request) {
  * @param req
  */
 export function validateLastName(req: Request) {
-  const lastName = req.body.last_name;
+  const lastName = req.body.lastName;
 
   // valida que el atributo este presente en el cuerpo de la petición
   if (!lastName) {

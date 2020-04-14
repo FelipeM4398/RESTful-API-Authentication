@@ -1,5 +1,5 @@
-import { Model } from 'objection';
+import BaseModel from './BaseModel';
 
-export default class Role extends Model {
+export default class Role extends BaseModel {
   static tableName = 'roles';
 }

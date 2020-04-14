@@ -3,7 +3,7 @@ const mocks = {
   userValid: {
     identification: 123456,
     name: 'test',
-    last_name: 'test',
+    lastName: 'test',
     phone: '1234567890',
     email: 'valid0@test.com',
     password: 'test',
@@ -13,7 +13,7 @@ const mocks = {
   identificationExists: {
     identification: 1234567890,
     name: 'test',
-    last_name: 'test',
+    lastName: 'test',
     phone: '1234567890',
     email: 'valid0@test.com',
     password: 'test',
@@ -22,7 +22,7 @@ const mocks = {
   // usuario sin identificacion
   withoutIdentification: {
     name: 'test',
-    last_name: 'test',
+    lastName: 'test',
     email: 'valid5@test.com',
     password: 'test',
   },
@@ -30,7 +30,7 @@ const mocks = {
   // usuario sin nombre
   withoutName: {
     identification: '98323801',
-    last_name: 'test',
+    lastName: 'test',
     email: 'valid6@test.com',
     password: 'test',
   },
@@ -47,7 +47,7 @@ const mocks = {
   withoutEmail: {
     identification: '983326781',
     name: 'test',
-    last_name: 'test',
+    lastName: 'test',
     password: 'test',
   },
 
@@ -55,7 +55,7 @@ const mocks = {
   withoutPassword: {
     identification: '983326781',
     name: 'test',
-    last_name: 'test',
+    lastName: 'test',
     email: 'test@valid.com',
   },
 
@@ -63,7 +63,7 @@ const mocks = {
   emailExists: {
     identification: 234567890,
     name: 'test',
-    last_name: 'test',
+    lastName: 'test',
     phone: '1234567890',
     email: 'test@test.com',
     password: 'test',
@@ -73,7 +73,7 @@ const mocks = {
   identificationInvalid: {
     identification: '123test',
     name: 'test',
-    last_name: 'test',
+    lastName: 'test',
     phone: '1234567890',
     email: 'valid1@test.com',
     password: 'test',
@@ -83,7 +83,7 @@ const mocks = {
   nameInvalid: {
     identification: '1234567',
     name: 'test123',
-    last_name: 'test',
+    lastName: 'test',
     phone: '1234567890',
     email: 'valid2@test.com',
     password: 'test',
@@ -93,7 +93,7 @@ const mocks = {
   lastNameInvalid: {
     identification: '12345678',
     name: 'test',
-    last_name: 'test123',
+    lastName: 'test123',
     phone: '1234567890',
     email: 'valid3@test.com',
     password: 'test',
@@ -103,7 +103,7 @@ const mocks = {
   phoneInvalid: {
     identification: '12345678',
     name: 'test',
-    last_name: 'test',
+    lastName: 'test',
     phone: '1234567test',
     email: 'valid3@test.com',
     password: 'test',
@@ -113,7 +113,7 @@ const mocks = {
   emailInvalid: {
     identification: '123456789',
     name: 'test',
-    last_name: 'test',
+    lastName: 'test',
     phone: '1234567890',
     email: 'valid4@testcom',
     password: 'test',
