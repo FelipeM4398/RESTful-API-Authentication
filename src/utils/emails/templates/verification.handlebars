@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<style>
+  body {
+    font-family: Segoe UI, sans-serif;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+  }
+
+  a {
+    text-decoration: none;
+    padding: 0.3rem;
+    color: #000;
+    background-color: #54a3ff;
+    border: 1px solid;
+    display: inline-block;
+    border-radius: 0.3rem;
+  }
+
+  .center {
+    text-align: center;
+  }
+</style>
+
+<body class="center">
+  <h2>
+    ¡Bienvenido {{name}}!</br>Confirma tu dirección de email
+  </h2>
+  <p>Al hacer clic en el siguiente enlace, está confirmando su dirección de correo electrónico.</p>
+  <div>
+    <a href="{{link}}">Confirmar</a>
+  </div>
+</body>
+
+</html>

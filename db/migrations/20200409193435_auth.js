@@ -1,10 +1,5 @@
 exports.up = function (knex) {
   return knex.schema
-    .createTable('passwords-resets', function (table) {
-      table.string('email', 100).unique().index().notNullable();
-      table.text('token').notNullable();
-      table.dateTime('created_at').notNullable().defaultTo(knex.fn.now());
-    })
     .createTable('permissions', function (table) {
       table.increments('id').primary();
       table.string('name', 30).notNullable().unique();
@@ -24,6 +19,11 @@ exports.up = function (knex) {
       table.text('picture');
       table.string('email', 100).unique().notNullable();
       table.text('password').notNullable();
+      table.boolean('verified').notNullable().defaultTo(false);
+      table.string('password_reset_token', 100);
+      table.string('email_verification_token', 100);
+      table.dateTime('password_reset_expires');
+      table.dateTime('email_verification_expires');
       table.boolean('enable').notNullable().defaultTo(true);
       table.dateTime('created_at').notNullable().defaultTo(knex.fn.now());
       table.dateTime('updated_at').notNullable().defaultTo(knex.fn.now());

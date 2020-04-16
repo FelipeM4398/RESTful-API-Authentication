@@ -2,6 +2,8 @@
 const BASE_URL = 'api';
 const API_VERSION = 'v1';
 const API_BASE_URL = `/${BASE_URL}/${API_VERSION}`;
+export const EMAIL_TOKEN_EXPIRE = 86400;
+export const PASSWORD_TOKEN_EXPIRE = 3600;
 
 // messages base
 const isRequired = (campo: string) =>
@@ -17,6 +19,7 @@ const endpoints = {
   users: `${API_BASE_URL}/users`,
   auth: `${API_BASE_URL}/auth`,
   profile: `${API_BASE_URL}/userinfo`,
+  verify: `${API_BASE_URL}/verify`,
 };
 
 //messagges

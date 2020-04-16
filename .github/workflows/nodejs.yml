@@ -1,4 +1,4 @@
-name: RESTful API Authentication CI
+name: Integración Continua
 
 on:
   push:

@@ -1,16 +1,26 @@
 import { Model } from 'objection';
 import bcrypt from 'bcrypt';
-import picture from '../utils/picture';
+import createAvatar from '../utils/createAvatar';
 import Role from './Role';
 import BaseModel from './BaseModel';
 
 export default class User extends BaseModel {
   static tableName = 'users';
 
-  password!: string;
-  picture!: string;
+  id!: number;
+  identification!: string;
   name!: string;
   lastName!: string;
+  picture!: string;
+  phone?: string;
+  email!: string;
+  emailVerificationToken?: string;
+  emailVerificationExpires?: Date;
+  passwordResetToken?: string;
+  passwordResetExpires?: Date;
+  verified!: boolean;
+  enable!: boolean;
+  password!: string;
 
   /**
    * Se encripta la contraseña y se crea el avatar antes de insertar un usuario
@@ -19,7 +29,7 @@ export default class User extends BaseModel {
     const salt = await bcrypt.genSalt(8);
     const hash = await bcrypt.hash(this.password, salt);
     this.password = hash;
-    this.picture = picture(this.name, this.lastName);
+    this.picture = createAvatar(this.name, this.lastName);
   }
 
   static get relationMappings() {

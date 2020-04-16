@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import MyError from '../MyError';
+import MyError from '../errors/MyError';
 import User from '../../models/User';
 import { errorCodes, messages } from '../constants';
 

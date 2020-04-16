@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import knex from './config/db/knex';
 import { Model } from 'objection';
-import MyError from './utils/MyError';
+import MyError from './utils/errors/MyError';
 import errorHandler from './middlewares/errorHandler';
 import { endpoints } from './utils/constants';
 import authRouter from './routes/authRouter';
