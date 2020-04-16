@@ -1,9 +1,11 @@
+import { EMAIL_TOKEN_EXPIRE } from '../utils/constants';
+import { sendVerificationEmail } from '../utils/emails/sendVerificationEmail';
+import { validateBodyForCreate } from '../utils/validations/user.validation';
+import { validateEmailToken } from '../utils/validations/token.validation';
 import { Request, NextFunction, Response } from 'express';
 import User from '../models/User';
-import { validateBodyForCreate } from '../utils/validations/user.validation';
+import knex from '../config/db/knex';
 import crypto from 'crypto';
-import { sendVerificationEmail } from '../utils/emails/sendVerificationEmail';
-import { EMAIL_TOKEN_EXPIRE } from '../utils/constants';
 
 /**
  * Registra un nuevo usuario
@@ -19,18 +21,17 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
     const emailExpires = new Date();
     emailExpires.setSeconds(emailExpires.getSeconds() + EMAIL_TOKEN_EXPIRE);
 
-    const user = await User.query()
-      .skipUndefined()
-      .insert({
-        identification: req.body.identification,
-        name: req.body.name,
-        lastName: req.body.lastName,
-        phone: req.body.phone,
-        email: req.body.email,
-        password: req.body.password,
-        emailVerificationToken: crypto.randomBytes(20).toString('hex'),
-        emailVerificationExpires: emailExpires,
-      });
+    const user = await User.query().insert({
+      identification: req.body.identification,
+      name: req.body.name,
+      lastName: req.body.lastName,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: req.body.password,
+      emailVerificationToken: crypto.randomBytes(20).toString('hex'),
+      emailVerificationExpires: emailExpires,
+    });
+    // se asigna el rol usuario por defecto
     await user.$relatedQuery('roles').relate(2);
 
     sendVerificationEmail(user, req);
@@ -38,5 +39,27 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
     res.status(201).send();
   } catch (err) {
     next(err);
+  }
+}
+
+/**
+ * Verifica un usuario
+ * @param req
+ * @param res
+ * @param next
+ */
+export async function verify(req: Request, res: Response, next: NextFunction) {
+  try {
+    const user = await validateEmailToken(req);
+
+    await user.$query().patch({
+      verified: true,
+      emailVerificationToken: knex.raw('NULL'),
+      emailVerificationExpires: knex.raw('NULL'),
+    });
+
+    res.status(200).send();
+  } catch (error) {
+    next(error);
   }
 }

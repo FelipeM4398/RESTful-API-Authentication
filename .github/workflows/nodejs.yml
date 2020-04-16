@@ -1,4 +1,4 @@
-name: Integración Continua
+name: Continuos Integration
 
 on:
   push:

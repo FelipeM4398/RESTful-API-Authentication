@@ -4,7 +4,7 @@ import User from '../../models/User';
 import { endpoints } from '../constants';
 
 export async function sendVerificationEmail(user: User, req: Request) {
-  const link = `${req.protocol}://${req.hostname}:3000${endpoints.verify}/${user.emailVerificationToken}`;
+  const link = `${req.protocol}://${req.hostname}:3000${endpoints.auth}/verify/${user.emailVerificationToken}`;
   const options = {
     from: '"Auth API" <no-replay@auth.com>',
     to: user.email,

@@ -15,12 +15,14 @@ export default class User extends BaseModel {
   phone?: string;
   email!: string;
   emailVerificationToken?: string;
-  emailVerificationExpires?: Date;
+  emailVerificationExpires!: Date;
   passwordResetToken?: string;
   passwordResetExpires?: Date;
   verified!: boolean;
   enable!: boolean;
   password!: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 
   /**
    * Se encripta la contraseña y se crea el avatar antes de insertar un usuario
@@ -30,6 +32,11 @@ export default class User extends BaseModel {
     const hash = await bcrypt.hash(this.password, salt);
     this.password = hash;
     this.picture = createAvatar(this.name, this.lastName);
+  }
+
+  $beforeUpdate() {
+    this.createdAt = undefined;
+    this.updatedAt = new Date();
   }
 
   static get relationMappings() {

@@ -2,7 +2,7 @@ process.env.NODE_ENV = 'test';
 
 import chai from 'chai';
 import chaiHttp = require('chai-http');
-import app from './../../src/app';
+import app from '../../src/app';
 
 chai.use(chaiHttp);
 

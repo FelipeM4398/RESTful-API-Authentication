@@ -35,7 +35,7 @@ export function validateIdentification(req: Request) {
   if (!identification) {
     throw new MyError(
       errorCodes.attributeNotPresent,
-      messages.identificationIsRequired,
+      messages().identificationIsRequired,
       400
     );
   }
@@ -44,7 +44,7 @@ export function validateIdentification(req: Request) {
   if (!identificationRegex.test(identification)) {
     throw new MyError(
       errorCodes.attributeInvalid,
-      messages.identificationIsInvalid,
+      messages().identificationIsInvalid,
       400
     );
   }
@@ -60,14 +60,18 @@ export function validateName(req: Request) {
   if (!name) {
     throw new MyError(
       errorCodes.attributeNotPresent,
-      messages.nameIsRequired,
+      messages().nameIsRequired,
       400
     );
   }
 
   // valida que el atributo cumpla con las condiciones de la expresión regular
   if (!namesRegex.test(name)) {
-    throw new MyError(errorCodes.attributeInvalid, messages.nameIsInvalid, 400);
+    throw new MyError(
+      errorCodes.attributeInvalid,
+      messages().nameIsInvalid,
+      400
+    );
   }
 }
 
@@ -82,7 +86,7 @@ export function validateLastName(req: Request) {
   if (!lastName) {
     throw new MyError(
       errorCodes.attributeNotPresent,
-      messages.lastNameIsRequired,
+      messages().lastNameIsRequired,
       400
     );
   }
@@ -91,7 +95,7 @@ export function validateLastName(req: Request) {
   if (!namesRegex.test(lastName)) {
     throw new MyError(
       errorCodes.attributeInvalid,
-      messages.lastNameIsInvalid,
+      messages().lastNameIsInvalid,
       400
     );
   }
@@ -108,7 +112,7 @@ export function validateEmail(req: Request) {
   if (!email) {
     throw new MyError(
       errorCodes.attributeNotPresent,
-      messages.emailIsRequired,
+      messages().emailIsRequired,
       400
     );
   }
@@ -117,7 +121,7 @@ export function validateEmail(req: Request) {
   if (!emailRegex.test(email)) {
     throw new MyError(
       errorCodes.attributeInvalid,
-      messages.emailIsInvalid,
+      messages().emailIsInvalid,
       400
     );
   }
@@ -134,7 +138,7 @@ export function validatePassword(req: Request) {
   if (!password) {
     throw new MyError(
       errorCodes.attributeNotPresent,
-      messages.passwordIsRequired,
+      messages().passwordIsRequired,
       400
     );
   }
@@ -152,7 +156,7 @@ export function validatePhone(req: Request) {
   if (phone && !phoneRegex.test(phone)) {
     throw new MyError(
       errorCodes.attributeInvalid,
-      messages.phoneIsInvalid,
+      messages().phoneIsInvalid,
       400
     );
   }
@@ -169,7 +173,7 @@ export async function identificationExists(req: Request) {
   if (users.length > 0) {
     throw new MyError(
       errorCodes.alreadyExists,
-      messages.identificationAlreadyExists,
+      messages(identification).identificationAlreadyExists,
       409
     );
   }
@@ -186,7 +190,7 @@ export async function emailExists(req: Request) {
   if (users.length > 0) {
     throw new MyError(
       errorCodes.alreadyExists,
-      messages.emailAlreadyExists,
+      messages(email).emailAlreadyExists,
       409
     );
   }

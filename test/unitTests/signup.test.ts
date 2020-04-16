@@ -11,6 +11,7 @@ chai.use(chaiHttp);
 
 describe('signup tests', () => {
   beforeEach(async function () {
+    await knex.migrate.rollback();
     await knex.migrate.latest();
     await knex.seed.run();
   });
@@ -34,7 +35,10 @@ describe('signup tests', () => {
       .send(mocks.identificationExists);
     chai
       .expect(res.body.message)
-      .to.equal(messages.identificationAlreadyExists);
+      .to.equal(
+        messages(mocks.identificationExists.identification)
+          .identificationAlreadyExists
+      );
   });
 
   it('should return: email already exists', async () => {
@@ -42,7 +46,9 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.emailExists);
-    chai.expect(res.body.message).to.equal(messages.emailAlreadyExists);
+    chai
+      .expect(res.body.message)
+      .to.equal(messages(mocks.emailExists.email).emailAlreadyExists);
   });
 
   it('should return: identification is required', async () => {
@@ -50,7 +56,7 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.withoutIdentification);
-    chai.expect(res.body.message).to.equal(messages.identificationIsRequired);
+    chai.expect(res.body.message).to.equal(messages().identificationIsRequired);
   });
 
   it('should return: name is required', async () => {
@@ -58,7 +64,7 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.withoutName);
-    chai.expect(res.body.message).to.equal(messages.nameIsRequired);
+    chai.expect(res.body.message).to.equal(messages().nameIsRequired);
   });
 
   it('should return: last name is required', async () => {
@@ -66,7 +72,7 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.withoutLastName);
-    chai.expect(res.body.message).to.equal(messages.lastNameIsRequired);
+    chai.expect(res.body.message).to.equal(messages().lastNameIsRequired);
   });
 
   it('should return: email is required', async () => {
@@ -74,7 +80,7 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.withoutEmail);
-    chai.expect(res.body.message).to.equal(messages.emailIsRequired);
+    chai.expect(res.body.message).to.equal(messages().emailIsRequired);
   });
 
   it('should return: password is required', async () => {
@@ -82,7 +88,7 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.withoutPassword);
-    chai.expect(res.body.message).to.equal(messages.passwordIsRequired);
+    chai.expect(res.body.message).to.equal(messages().passwordIsRequired);
   });
 
   it('should return: invalid identification', async () => {
@@ -90,7 +96,7 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.identificationInvalid);
-    chai.expect(res.body.message).to.equal(messages.identificationIsInvalid);
+    chai.expect(res.body.message).to.equal(messages().identificationIsInvalid);
   });
 
   it('should return: invalid name', async () => {
@@ -98,7 +104,7 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.nameInvalid);
-    chai.expect(res.body.message).to.equal(messages.nameIsInvalid);
+    chai.expect(res.body.message).to.equal(messages().nameIsInvalid);
   });
 
   it('should return: invalid last name', async () => {
@@ -106,7 +112,7 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.lastNameInvalid);
-    chai.expect(res.body.message).to.equal(messages.lastNameIsInvalid);
+    chai.expect(res.body.message).to.equal(messages().lastNameIsInvalid);
   });
 
   it('should return: invalid phone', async () => {
@@ -114,7 +120,7 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.phoneInvalid);
-    chai.expect(res.body.message).to.equal(messages.phoneIsInvalid);
+    chai.expect(res.body.message).to.equal(messages().phoneIsInvalid);
   });
 
   it('should return: invalid email', async () => {
@@ -122,6 +128,6 @@ describe('signup tests', () => {
       .request(app)
       .post(`${endpoints.auth}/signup`)
       .send(mocks.emailInvalid);
-    chai.expect(res.body.message).to.equal(messages.emailIsInvalid);
+    chai.expect(res.body.message).to.equal(messages().emailIsInvalid);
   });
 });
