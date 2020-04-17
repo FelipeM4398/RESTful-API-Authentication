@@ -7,6 +7,7 @@ import BaseModel from './BaseModel';
 export default class User extends BaseModel {
   static tableName = 'users';
 
+  // atributos
   id!: number;
   identification!: string;
   name!: string;
@@ -25,6 +26,14 @@ export default class User extends BaseModel {
   updatedAt?: Date;
 
   /**
+   * Compara las contraseñas
+   * @returns boolean
+   */
+  async comparePassword(pass: string): Promise<boolean> {
+    return await bcrypt.compare(pass, this.password);
+  }
+
+  /**
    * Se encripta la contraseña y se crea el avatar antes de insertar un usuario
    */
   async $beforeInsert() {
@@ -34,11 +43,17 @@ export default class User extends BaseModel {
     this.picture = createAvatar(this.name, this.lastName);
   }
 
+  /**
+   * Se establece la fecha de actualización
+   */
   $beforeUpdate() {
     this.createdAt = undefined;
     this.updatedAt = new Date();
   }
 
+  /**
+   * Se definen las relaciones
+   */
   static get relationMappings() {
     return {
       roles: {

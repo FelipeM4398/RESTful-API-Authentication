@@ -3,6 +3,11 @@ import { Request } from 'express';
 import User from '../../models/User';
 import { endpoints } from '../constants';
 
+/**
+ * Envia un correo para verificar el email del usuario
+ * @param user
+ * @param req
+ */
 export async function sendVerificationEmail(user: User, req: Request) {
   const link = `${req.protocol}://${req.hostname}:3000${endpoints.auth}/verify/${user.emailVerificationToken}`;
   const options = {

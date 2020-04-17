@@ -6,6 +6,7 @@ import { errorCodes, messages } from '../constants';
 /**
  * Valida el token de verificación de email
  * @param req
+ * @returns Promise<User>
  */
 export async function validateEmailToken(req: Request): Promise<User> {
   const token = req.params.token;

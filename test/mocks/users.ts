@@ -1,4 +1,4 @@
-const mocks = {
+const mocksUsers = {
   // usuario con los atributos validos
   userValid: {
     identification: 123456,
@@ -65,7 +65,7 @@ const mocks = {
     name: 'test',
     lastName: 'test',
     phone: '1234567890',
-    email: 'test@test.com',
+    email: 'valid@test.com',
     password: 'test',
   },
 
@@ -120,4 +120,4 @@ const mocks = {
   },
 };
 
-export default mocks;
+export default mocksUsers;

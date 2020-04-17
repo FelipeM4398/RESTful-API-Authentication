@@ -1,10 +1,18 @@
-import { EMAIL_TOKEN_EXPIRE } from '../utils/constants';
 import { sendVerificationEmail } from '../utils/emails/sendVerificationEmail';
-import { validateBodyForCreate } from '../utils/validations/user.validation';
 import { validateEmailToken } from '../utils/validations/token.validation';
+import {
+  EMAIL_TOKEN_EXPIRE,
+  JWT_SECRET,
+  JWT_TOKEN_EXPIRE,
+} from '../utils/constants';
 import { Request, NextFunction, Response } from 'express';
-import User from '../models/User';
+import {
+  validateBody,
+  validateCredentials,
+} from '../utils/validations/user.validation';
 import knex from '../config/db/knex';
+import User from '../models/User';
+import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
 /**
@@ -15,7 +23,7 @@ import crypto from 'crypto';
  */
 export async function signup(req: Request, res: Response, next: NextFunction) {
   try {
-    await validateBodyForCreate(req);
+    await validateBody(req);
 
     // crea la fecha en la que expira el token para verificar el email
     const emailExpires = new Date();
@@ -59,6 +67,31 @@ export async function verify(req: Request, res: Response, next: NextFunction) {
     });
 
     res.status(200).send();
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Retorna un JWT Token si el usuario se loguea con éxito
+ * @param req
+ * @param res
+ * @param next
+ */
+export async function login(req: Request, res: Response, next: NextFunction) {
+  try {
+    const user = await validateCredentials(req);
+
+    // crea el token con el id y email del usuario
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
+      expiresIn: JWT_TOKEN_EXPIRE,
+    });
+
+    res.status(200).send({
+      type: 'Bearer',
+      access_token: token,
+      expiresIn: JWT_TOKEN_EXPIRE,
+    });
   } catch (error) {
     next(error);
   }

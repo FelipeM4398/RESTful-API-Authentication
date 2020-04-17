@@ -13,7 +13,7 @@ const emailRegex = RegExp(/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$/);
  * Valida los atributos enviados en la petición para crear un usuario
  * @param req
  */
-export async function validateBodyForCreate(req: Request) {
+export async function validateBody(req: Request) {
   validateIdentification(req);
   validateName(req);
   validateLastName(req);
@@ -22,6 +22,45 @@ export async function validateBodyForCreate(req: Request) {
   validatePassword(req);
   await identificationExists(req);
   await emailExists(req);
+}
+
+/**
+ * Valida las credenciales y el usuario
+ * @param req
+ * @returns Promise<User>
+ */
+export async function validateCredentials(req: Request): Promise<User> {
+  validateEmail(req);
+  validatePassword(req);
+
+  const user = await User.query().findOne('email', req.body.email);
+
+  // valida que exista un usuario con el email y que las contraseñas coincidan
+  if (!user || !(await user.comparePassword(req.body.password))) {
+    throw new MyError(
+      errorCodes.badCredentials,
+      messages().badCredentials,
+      400
+    );
+  }
+
+  validateUser(user);
+
+  return user;
+}
+
+/**
+ * Valida que el usuario esté verificado y habilitado
+ * @param user
+ */
+export function validateUser(user: User) {
+  if (!user.verified) {
+    throw new MyError(errorCodes.notVerified, messages().notVerified, 403);
+  }
+
+  if (!user.enable) {
+    throw new MyError(errorCodes.userDisabled, messages().userDisabled, 403);
+  }
 }
 
 /**

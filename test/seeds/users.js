@@ -1,4 +1,8 @@
+const bcrypt = require('bcrypt');
 exports.seed = async function (knex) {
+  // Deletes ALL existing entries
+  const salt = await bcrypt.genSalt(8);
+  const hash = await bcrypt.hash('test123', salt);
   const date = new Date();
   date.setHours(date.getHours() + 1);
 
@@ -9,14 +13,30 @@ exports.seed = async function (knex) {
       identification: '1234567890',
       name: 'Test',
       last_name: 'Test',
-      phone: '1234567890',
-      picture: 'https://i1.wp.com/cdn.auth0.com/avatars/fm.png',
-      email: 'test@test.com',
+      email: 'noverified@test.com',
       verified: false,
       email_verification_token: 'testToken',
       email_verification_expires: date,
-      password: 'test123',
+      password: hash,
       enable: true,
+    },
+    {
+      identification: '87547890',
+      name: 'Test',
+      last_name: 'Test',
+      email: 'valid@test.com',
+      verified: true,
+      password: hash,
+      enable: true,
+    },
+    {
+      identification: '87547893',
+      name: 'Test',
+      last_name: 'Test',
+      email: 'disabled@test.com',
+      verified: true,
+      password: hash,
+      enable: false,
     },
   ]);
 };
