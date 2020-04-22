@@ -30,3 +30,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "my-first-app-auth"
           heroku_email: "luisf4398@hotmail.com
+          usedocker: true
